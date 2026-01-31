@@ -1,0 +1,111 @@
+\subsection{Formal System Definitions}
+
+The proposed framework models procedural generation as a coupled dynamical system operating over two interacting spaces: a transient state space and a persistent constraint space. This section formalizes these components and their interaction.
+
+\subsubsection{State Space}
+
+Let the state of the simulation at discrete time step $t$ be defined as:
+\[
+S_t = \langle E_t, A_t, R_t \rangle
+\]
+where:
+\begin{itemize}
+    \item $E_t$ represents the environment state, including spatial fields, occupancy distributions, and local interaction properties.
+    \item $A_t = \{a_1, a_2, \dots, a_n\}$ denotes the set of agents, each characterized by position, velocity, and minimal internal variables.
+    \item $R_t$ is the set of instantiated interaction rules derived from the active constraint population.
+\end{itemize}
+
+The state space is fully observable and deterministic under fixed random seeds. It is ephemeral in nature: state variables are regenerated or reset between simulation episodes. No learning, optimization, or persistence occurs within the state space itself.
+
+\subsubsection{Constraint Population}
+
+Let the constraint population at episode $t$ be defined as:
+\[
+C_t = \{c_1, c_2, \dots, c_m\}
+\]
+
+Each constraint $c_i$ is represented as a symbolic structure:
+\[
+c_i = \langle \tau, \sigma, \phi, \psi, \alpha, \lambda \rangle
+\]
+where:
+\begin{itemize}
+    \item $\tau$ denotes the constraint type (e.g., spatial, relational, temporal).
+    \item $\sigma$ specifies the scope of application (global, regional, or agent-local).
+    \item $\phi$ defines the activation condition under which the constraint applies.
+    \item $\psi$ specifies the effect on environment fields or agent affordances.
+    \item $\alpha \in \mathbb{R}^+$ denotes constraint strength.
+    \item $\lambda$ represents constraint lifetime or persistence.
+\end{itemize}
+
+Constraints persist across episodes and constitute the primary objects of adaptation in the system.
+
+\subsubsection{Evaluation Function}
+
+Constraint populations are evaluated using an episode-level evaluation function:
+\[
+E(C_t) : C_t \rightarrow \mathbb{R}
+\]
+
+The function $E(C_t)$ aggregates multiple system-level metrics computed over the trajectory of $S_t$, including behavioral stability, structural diversity, emergent interaction richness, and avoidance of degenerate or collapsed states. Importantly, constraints are evaluated indirectly via their systemic effects rather than through direct optimization of generated artifacts.
+
+\subsection{Constraint Application Procedure}
+
+At the beginning of each simulation episode, the current constraint population $C_t$ is applied to instantiate the initial system state. Constraint application proceeds as follows:
+
+\begin{enumerate}
+    \item All constraints whose activation conditions $\phi$ are satisfied are identified.
+    \item Constraint effects $\psi$ are applied to initialize environment fields and agent affordances.
+    \item Interaction rules $R_0$ are derived from the active constraint set.
+    \item Agents and environment state are initialized deterministically given the constraint set and random seed.
+\end{enumerate}
+
+This procedure ensures that system instantiation is reproducible and solely determined by the constraint population.
+
+\subsection{Constraint Conflict Resolution}
+
+Conflicts arise when multiple constraints prescribe incompatible effects over overlapping scopes. Conflict resolution follows a deterministic precedence mechanism:
+
+\begin{enumerate}
+    \item Constraints are ordered by descending strength $\alpha$.
+    \item Higher-strength constraints override weaker constraints within overlapping scopes.
+    \item Conflicts between equally strong constraints are resolved using a fixed, predefined tie-breaking rule.
+    \item All conflict events are logged for post hoc analysis and interpretability.
+\end{enumerate}
+
+This approach guarantees consistency while preserving transparency of constraint interactions.
+
+\subsection{Fitness Attribution and Constraint Evolution}
+
+After each simulation episode, fitness is attributed to constraints based on their marginal contribution to system-level behavior. For each constraint $c_i \in C_t$, the following procedure is applied:
+
+\begin{enumerate}
+    \item Temporarily weaken or remove $c_i$ from the constraint population.
+    \item Re-evaluate system dynamics under the modified population $C_t \setminus \{c_i\}$.
+    \item Measure the change in evaluation score $E(C_t)$.
+\end{enumerate}
+
+The marginal fitness contribution of $c_i$ is defined as:
+\[
+\Delta E_i = E(C_t) - E(C_t \setminus \{c_i\})
+\]
+
+Evolutionary operators are then applied to the constraint population:
+\begin{itemize}
+    \item \textbf{Mutation}: perturbation of constraint parameters such as $\alpha$, $\sigma$, or $\psi$.
+    \item \textbf{Specialization}: reduction of constraint scope.
+    \item \textbf{Generalization}: expansion of applicability conditions.
+    \item \textbf{Removal}: elimination of persistently harmful constraints.
+\end{itemize}
+
+All evolutionary operations act exclusively on constraints and never on state or agent representations.
+
+\subsection{Design Rationale}
+
+\subsubsection{Non-Learning Agents}
+
+Agents are intentionally non-learning to ensure that emergent system behavior can be attributed to constraint structure rather than agent-level adaptation. This design choice isolates the generative capacity of the constraint ecology and prevents confounding effects arising from embedded agent intelligence.
+
+\subsubsection{Separation of Constraint and State Dynamics}
+
+Constraint evolution operates on a slower temporal scale than state dynamics. This separation prevents feedback loops that would reduce evaluation to short-term optimization and allows constraints to be assessed based on long-horizon systemic effects. The distinction is fundamental to treating procedural generation as a system-level process rather than an artifact-level one.

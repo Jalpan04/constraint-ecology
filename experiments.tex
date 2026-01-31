@@ -1,0 +1,15 @@
+\subsection{Experimental Conditions}
+
+Two experimental conditions are evaluated. The first is a fixed-constraint baseline in which a predefined set of symbolic constraints remains unchanged throughout all simulation episodes. The second condition enables constraint evolution, allowing constraints to be mutated, specialized, generalized, or removed based on their system-level effects.
+
+\subsection{Agent and Environment Configuration}
+
+All experiments use homogeneous, non-learning agents operating in a two-dimensional continuous environment. Each simulation run contains 50 agents with local perception and stochastic movement bounded by active constraints. The environment contains no predefined semantic structures; all observed structure emerges from constraint-agent interaction.
+
+\subsection{Simulation Parameters}
+
+Each run consists of 10 simulation episodes, with each episode lasting 1,000 timesteps. Constraint adaptation is applied at the end of each episode in the evolving-constraint condition. All experiments use a fixed random seed (12345) to ensure reproducibility and enable direct comparison between baseline and evolving conditions.
+
+\subsection{Metrics and Logging}
+
+System-level metrics, including structural diversity, stability, emergence, and collapse detection, are logged at the end of each episode. For the evolving-constraint condition, additional constraint-level metrics such as population size, lifetime distribution, and turnover rate are recorded.

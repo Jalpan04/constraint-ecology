@@ -1,0 +1,62 @@
+\subsection{Formal Metric Definitions}
+
+This section defines the system-level metrics used to evaluate procedural behavior. All metrics are computed at the episode level unless otherwise stated.
+
+\subsubsection{Spatial Variance}
+
+Spatial variance measures the distribution diversity of agents across the environment. Let $\{(x_i, y_i)\}_{i=1}^{n}$ denote the positions of $n$ agents. The mean position is:
+
+\[
+\bar{x} = \frac{1}{n}\sum_{i=1}^{n} x_i, \quad \bar{y} = \frac{1}{n}\sum_{i=1}^{n} y_i
+\]
+
+Spatial variance is defined as:
+
+\[
+V = \frac{1}{n}\sum_{i=1}^{n} [(x_i - \bar{x})^2 + (y_i - \bar{y})^2]
+\]
+
+Higher values of $V$ indicate more dispersed and structurally diverse agent configurations.
+
+\subsubsection{System Stability}
+
+Stability is measured as the temporal variance of a selected system observable $M$ (e.g., average agent density or interaction rate) across episodes. Given episode-level measurements $\{M_1, M_2, \dots, M_T\}$:
+
+\[
+S = \frac{1}{T} \sum_{t=1}^{T} (M_t - \bar{M})^2
+\]
+
+Lower values of $S$ indicate more stable long-term system behavior.
+
+\subsubsection{Emergence}
+
+Emergence is quantified using state-space coverage over the course of a run. Let $\mathcal{S}$ denote the set of discretized system states encountered across all episodes, and let $|\mathcal{S}|$ denote its cardinality. Emergence is measured as:
+
+\[
+E = \frac{|\mathcal{S}|}{|\mathcal{S}_{\max}|}
+\]
+
+where $|\mathcal{S}_{\max}|$ is the maximum possible state-space size under discretization. This metric captures the system’s ability to explore nontrivial configurations.
+
+\subsubsection{Collapse Detection}
+
+System collapse is detected when diversity and agent activity fall below predefined thresholds for consecutive episodes. Formally, collapse is detected at episode $t$ if:
+
+\[
+D_t < \epsilon_D \quad \text{and} \quad A_t < \epsilon_A
+\]
+
+for $n$ consecutive episodes, where $A_t$ denotes average agent movement magnitude and $\epsilon_D, \epsilon_A$ are empirically defined thresholds.
+
+\subsubsection{Constraint-Level Metrics}
+
+For the evolving-constraint condition, additional metrics are computed:
+
+\begin{itemize}
+    \item Constraint population size: $|C_t|$
+    \item Average constraint lifetime
+    \item Constraint turnover rate between episodes
+    \item Average marginal fitness contribution $\Delta E$
+\end{itemize}
+
+These metrics characterize the dynamics of the constraint ecology itself.

@@ -1,0 +1,25 @@
+# Binaries
+*.exe
+*.o
+*.dll
+
+# LaTeX Intemediates
+*.aux
+*.log
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+*.dvi
+
+# Python
+__pycache__/
+*.py[cod]
+
+# Editor/IDE
+.vscode/
+.idea/
+*.swp
+
+# OS
+Thumbs.db
+Desktop.ini

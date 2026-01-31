@@ -1,0 +1,149 @@
+\documentclass[11pt]{article}
+
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+
+
+\title{Constraint Ecology: A System-Level Approach to Procedural Generation via Evolving Constraints}
+\author{Jalpan Vyas \\ \texttt{jalpan2104@gmail.com}}
+\date{}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Procedural content generation (PCG) systems are typically defined by static or externally authored constraints that delimit the space of possible outputs. While adaptive and learning-based methods have introduced variability within these spaces, the constraints themselves are rarely treated as computational objects subject to generation or adaptation. This paper introduces \emph{Constraint Ecology}, a system-level procedural generation framework in which constraints are modeled as first-class entities that evolve over time based on their observed effects within a simulated environment. Rather than optimizing individual artifacts, the proposed system evaluates and adapts populations of symbolic constraints using agent-driven simulation as an observational instrument. We describe the architecture of the system, its implementation in a custom raylib-based simulation, and an experimental evaluation focusing on stability, diversity, emergence, and controllability. Results indicate that evolving constraint populations produce more sustained and interpretable system dynamics than fixed-constraint baselines. This work reframes procedural generation as the evolution of generative systems themselves.
+\end{abstract}
+
+\noindent\textbf{Keywords:} procedural content generation, constraint systems, simulation-based generation, computational creativity, emergent dynamics
+
+\section{Introduction}
+
+Procedural content generation (PCG) has been widely adopted in games, simulations, and generative design tools as a means of producing complex structures with limited manual authoring effort \cite{pcg1}. Most PCG systems conceptualize generation as a mapping from parameters or rules to concrete artifacts, such as environments or configurations, evaluated primarily at the point of output.
+
+Within this paradigm, constraints are commonly treated as static conditions that define validity or guide optimization. Even in adaptive or learning-based PCG systems, constraints are typically fixed in structure, with adaptation limited to parameters or selection among predefined generators. As a result, long-term system behavior is often brittle, difficult to interpret, or prone to collapse when deployed over extended time horizons.
+
+This paper addresses a structural gap in PCG research: the lack of systems that treat constraints themselves as mutable, computational objects subject to procedural generation. We propose \emph{Constraint Ecology}, a framework in which constraints evolve over time based on their systemic effects observed through simulation. By shifting the focus from artifact generation to constraint evolution, the proposed approach reframes PCG as the generation of generative processes rather than isolated outputs.
+
+The contributions of this paper are threefold. First, we introduce a system-level PCG paradigm in which constraints evolve as first-class entities. Second, we present a hybrid symbolic--adaptive architecture grounded in simulation-based evaluation. Third, we empirically demonstrate that evolving constraint populations yield more stable and diverse dynamics than fixed-constraint baselines.
+
+\section{Related Work}
+
+Rule-based and grammar-driven PCG systems, including L-systems and shape grammars, provide strong guarantees of validity and interpretability but rely on fixed, authored rules \cite{pcg2}. These systems lack mechanisms for adapting the structure of their generative constraints.
+
+Agent-driven generation has explored emergence through the interaction of simple agents within constrained environments \cite{pcg3}. While such systems can produce rich dynamics, constraints are typically implicit and static, encoded in agent behavior or environmental rules.
+
+Constraint-based PCG approaches formalize generation as the satisfaction of explicit constraints, often using satisfiability or logic programming techniques \cite{pcg4}. These methods treat constraints as correctness conditions rather than adaptive entities.
+
+Hybrid symbolic--adaptive systems combine rule-based structures with learning-based components, such as parameter optimization or generator selection \cite{pcg5}. However, these approaches operate within fixed constraint topologies and do not support the emergence or retirement of constraints themselves.
+
+In contrast, the proposed work models constraints as evolving computational entities, addressing a dimension of procedural generation not explored in existing frameworks.
+
+\section{System Overview}
+
+The proposed framework models procedural generation as a two-level dynamical system. At the lower level, state dynamics describe the evolution of a simulated environment populated by agents under a given constraint set. At the higher level, constraint dynamics describe the evolution of the constraint population based on measurements of state dynamics.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.9\linewidth]{figures/system_overview.png}
+\caption{Overview of the proposed procedural generation system showing the two-level architecture: constraint evolution (top) and state dynamics (bottom) with feedback loop.}
+\label{fig:system_overview}
+\end{figure}
+
+
+\section{Methodology}
+\input{methodology}
+
+\section{Experimental Setup}
+\input{experiments}
+
+
+\begin{table}[htbp]
+\centering
+\begin{tabular}{lr}
+\hline
+\textbf{Parameter} & \textbf{Value} \\
+\hline
+Number of agents & 50 \\
+Episodes per run & 10 \\
+Timesteps per episode & 1000 \\
+Window dimensions & 800 $\times$ 600 px \\
+Agent radius & 5.0 px \\
+Random walk strength & 0.5 \\
+Constraint count & 5 \\
+Random seed & 12345 \\
+\hline
+\end{tabular}
+\caption{Simulation parameters used in experiments.}
+\label{tab:params}
+\end{table}
+
+\section{Evaluation Metrics}
+\input{metrics}
+
+
+\section{Results}
+
+This section reports empirical results comparing the fixed-constraint baseline and the evolving-constraint system across ten independent simulation episodes using identical random seeds.
+
+\subsection{Constraint Adaptation Dynamics}
+
+In the fixed-constraint baseline, the mean constraint strength remained constant at $63.33$ throughout all episodes, reflecting the absence of adaptive mechanisms. In contrast, the evolving-constraint system exhibited a consistent reduction in mean constraint strength over time, decreasing from an initial value of $63.33$ to $24.54$ by the final episode (Figure~\ref{fig:constraint_strength}). This trend indicates that the system actively attenuated overly restrictive constraints in response to observed system dynamics.
+
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.85\linewidth]{figures/constraint_strength_plot.pdf}
+\caption{Evolution of mean constraint strength across episodes in the evolving-constraint condition.}
+\label{fig:constraint_strength}
+\end{figure}
+
+\subsection{Spatial Structure and Diversity}
+
+Spatial variance of agent distribution differed markedly between conditions. The baseline system frequently converged toward clustered or stagnant configurations, resulting in lower and less variable spatial variance. The evolving-constraint system maintained higher spatial variance across episodes, indicating sustained structural diversity and avoidance of collapse (Figure~\ref{fig:spatial_variance}).
+
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.85\linewidth]{figures/spatial_variance_plot.pdf}
+\caption{Spatial variance of agent distribution across episodes for baseline and evolving-constraint conditions.}
+\label{fig:spatial_variance}
+\end{figure}
+
+\subsection{Entropy and Stability}
+
+Entropy measurements further support this observation, with the evolving-constraint system exhibiting more consistent entropy levels across episodes compared to the baseline. Stability metrics showed that while the evolving system reduced constraint strength, it did not induce chaotic behavior; instead, system dynamics remained bounded and interpretable. These results suggest that constraint adaptation enables regulation of long-term behavior without sacrificing coherence.
+
+Overall, the results demonstrate that evolving constraints function as an effective mechanism for maintaining diversity and preventing degeneracy in procedural systems, supporting the central hypothesis of this work.
+
+
+
+\section{Discussion}
+
+The results indicate that evolving constraints allow the system to self-regulate its generative behavior, balancing rigidity and variability. Emergent dynamics arise from constraint interactions rather than agent complexity, supporting the view that constraint evolution is a powerful generative mechanism.
+
+\section{Limitations}
+
+The current system is limited in scale, and computational cost increases with constraint population size. Analysis becomes more difficult as constraint interactions grow more complex. Generalization to higher-dimensional environments remains future work.
+
+\section{Future Work}
+
+Future extensions include hierarchical constraint structures, integration of learning-based evaluation components, and application to generative design and adaptive simulation domains.
+
+\section{Conclusion}
+
+This paper introduced Constraint Ecology, a system-level procedural generation framework in which constraints evolve as first-class entities. By reframing PCG as the generation of generative systems rather than artifacts, this work addresses a fundamental gap in existing literature and opens new directions for simulation-based procedural generation.
+
+\begin{thebibliography}{9}
+\bibitem{pcg1} Shaker, N., Togelius, J., \& Nelson, M. J. (2016). \textit{Procedural Content Generation in Games}. Springer.
+
+\bibitem{pcg2} Prusinkiewicz, P., \& Lindenmayer, A. (1990). \textit{The Algorithmic Beauty of Plants}. Springer-Verlag.
+
+\bibitem{pcg3} Reynolds, C. W. (1987). Flocks, herds and schools: A distributed behavioral model. \textit{ACM SIGGRAPH Computer Graphics}, 21(4), 25--34.
+
+\bibitem{pcg4} Smith, G., \& Mateas, M. (2011). Answer set programming for procedural content generation: A design space approach. \textit{IEEE Transactions on Computational Intelligence and AI in Games}, 3(3), 187--200.
+
+\bibitem{pcg5} Summerville, A., et al. (2018). Procedural content generation via machine learning (PCGML). \textit{IEEE Transactions on Games}, 10(3), 257--270.
+\end{thebibliography}
+
+\end{document}
