@@ -1,5 +1,7 @@
 # Constraint Ecology: Evolving Constraints for Procedural Generation
 
+![GitHub top language](https://img.shields.io/github/languages/top/Jalpan04/constraint-ecology) ![GitHub repo size](https://img.shields.io/github/repo-size/Jalpan04/constraint-ecology) [![License: OTHER](https://img.shields.io/badge/License-OTHER-blue.svg)](LICENSE)
+
 A research implementation exploring constraint evolution as a mechanism for procedural generation in simulation environments.
 
 ## Project Structure
