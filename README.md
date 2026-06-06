@@ -38,3 +38,8 @@ A research implementation exploring constraint evolution as a mechanism for proc
 ## Citation
 
 See `main.pdf` for full paper with results and references.
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
