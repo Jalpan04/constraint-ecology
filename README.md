@@ -1,6 +1,6 @@
 # Constraint Ecology: Evolving Constraints for Procedural Generation
 
-![GitHub top language](https://img.shields.io/github/languages/top/Jalpan04/constraint-ecology) ![GitHub repo size](https://img.shields.io/github/repo-size/Jalpan04/constraint-ecology) [![License: OTHER](https://img.shields.io/badge/License-OTHER-blue.svg)](LICENSE)
+[![LaTeX](https://img.shields.io/badge/LaTeX-47A141?style=flat&logo=latex&logoColor=white)](https://www.latex-project.org) [![C](https://img.shields.io/badge/C-A8B9CC?style=flat&logo=c&logoColor=white)](https://en.wikipedia.org/wiki/C_(programming_language)) [![Python](https://img.shields.io/badge/Python-3776AB?style=flat&logo=python&logoColor=white)](https://www.python.org) [![Raylib](https://img.shields.io/badge/Raylib-000000?style=flat&logo=raylib&logoColor=white)](https://www.raylib.com) ![GitHub repo size](https://img.shields.io/github/repo-size/Jalpan04/constraint-ecology) [![License: OTHER](https://img.shields.io/badge/License-OTHER-blue.svg)](LICENSE)
 
 A research implementation exploring constraint evolution as a mechanism for procedural generation in simulation environments.
 
